@@ -1,0 +1,8 @@
+### Docker
+Dockerfile
+docker-compose.yml
+
+### Environment
+.env
+/vendor/
+/mysql/

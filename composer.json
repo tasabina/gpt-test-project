@@ -1,0 +1,41 @@
+{
+    "name": "tasabina/gpt-test-project",
+    "description": "Test project to lear OpenAI API",
+    "type": "project",
+    "license": "BSD 3-Clause",
+    "authors": [
+        {
+            "name": "Sabina Talipova",
+            "email": "tasabina@example.com"
+        }
+    ],
+    "require": {
+        "php": "^8.1"
+    },
+    "require-dev": {
+        "phpunit/phpunit": "^9.5"
+    },
+    "autoload": {
+        "psr-4": {
+            "App\\": "app\\src\\App"
+        }
+    },
+    "bin": [
+        "bin/myscript"
+    ],
+    "prefer-stable": true,
+    "minimum-stability": "dev",
+    "repositories": [
+		{
+			"type": "vcs",
+			"url": "git@github.com:tasabina/gpt-test-project.git*"
+		}
+	],
+    "extra": {
+        "installer-name": "gpt-project",
+        "expose": [
+            "client/dist",
+            "client/lang"
+        ]
+    }
+}
