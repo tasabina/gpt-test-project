@@ -2,7 +2,7 @@
     "name": "tasabina/gpt-test-project",
     "description": "Test project to lear OpenAI API",
     "type": "project",
-    "license": "BSD 3-Clause",
+    "license": "BSD-3-Clause",
     "authors": [
         {
             "name": "Sabina Talipova",
