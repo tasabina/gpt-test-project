@@ -4,8 +4,14 @@
 include $_composer_autoload_path ?? __DIR__ . '/../vendor/autoload.php';
 
 use Symfony\Component\Console\Application;
+use GptTestProject\Commands\ChatCLI;
+use GptTestProject\Commands\TranslateCLI;
 
 $application = new Application();
 
+$application->addCommands([
+    new ChatCLI(),
+    new TranslateCLI(),
+]);
 
 $application->run();
