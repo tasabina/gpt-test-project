@@ -14,7 +14,7 @@ use Symfony\Component\Console\Style\SymfonyStyle;
     name: 'chat',
     description: 'Chat with GPT-3.'
 )]
-class ChatCLI extends Command
+class ChatCLI extends BaseCLI
 {
     /**
      * The command help shown when running
@@ -45,7 +45,7 @@ class ChatCLI extends Command
             $gptHandler = new GPTRequestHandler();
             $response = $gptHandler->sendRequest($phrase);
 
-            $inOut->info(sprintf('Your result is: %s', $response));
+            $inOut->success(sprintf('Your result is: %s', $this->responseFormat($response)));
         }
 
         if ($inOut->confirm('Would you like to translate something again?')) {
@@ -54,5 +54,5 @@ class ChatCLI extends Command
 
         return Command::SUCCESS;
     }
-
+    
 }

@@ -15,7 +15,7 @@ use Symfony\Component\Console\Style\SymfonyStyle;
     name: 'translate',
     description: 'Translate words.'
 )]
-class TranslateCLI extends Command
+class TranslateCLI extends BaseCLI
 {
     /**
      * The command configuration method.
@@ -75,7 +75,7 @@ class TranslateCLI extends Command
             $gptHandler = new GPTRequestHandler();
             $response = $gptHandler->sendRequest($text);
 
-            $inOut->info(sprintf('Your result is: %s', $response));
+            $inOut->success(sprintf('Your result is: %s', $this->responseFormat($response)));
         }
 
         if ($inOut->confirm('Would you like to translate something again?')) {

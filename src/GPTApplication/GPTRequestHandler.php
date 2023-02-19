@@ -53,12 +53,14 @@ final class GPTRequestHandler
         return json_encode(
             [
                 "model" => "text-davinci-003",
-                "prompt" => trim($request),
+                "prompt" => $request,
                 "max_tokens" => 256,
                 "temperature" => 0.5,
+                'frequency_penalty' => 0,
+                'presence_penalty' => 0.6,
                 "stream" => false,
                 "logprobs" => null,
-                "stop" => "\n",
+                "stop" => ["\\n"],
             ]
         );     
     }
