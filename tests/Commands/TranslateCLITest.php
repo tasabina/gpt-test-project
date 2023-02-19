@@ -6,6 +6,7 @@ use GptTestProject\Commands\TranslateCLI;
 use PHPUnit\Framework\TestCase;
 use Symfony\Component\Console\Application;
 use Symfony\Component\Console\Tester\CommandCompletionTester;
+use Symfony\Component\Console\Tester\CommandTester;
 
 class TranslateCLICommandTest extends TestCase
 {
@@ -14,12 +15,10 @@ class TranslateCLICommandTest extends TestCase
         $application = new Application();
         $application->add(new TranslateCLI());
 
-        $tester = new CommandCompletionTester($application->get('translate'));
+        $tester = new CommandTester($application->get('translate'));
+        $tester->setInputs(['blue', 'yes', 'red', 'no']);
+        $tester->execute([]);
 
-        $suggestions = $tester->complete(['']);
-        // $this->assertSame(['Fabien', 'Fabrice', 'Wouter'], $suggestions);
-
-        $suggestions = $tester->complete(['Fa']);
-        // $this->assertSame(['Fabien', 'Fabrice'], $suggestions);
+        $tester->assertCommandIsSuccessful();
     }
 }

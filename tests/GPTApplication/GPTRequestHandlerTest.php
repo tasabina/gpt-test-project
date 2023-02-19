@@ -4,10 +4,7 @@ namespace GptTestProject\Tests\Commands;
 
 use PHPUnit\Framework\TestCase;
 
-class ChatCLICommandTest extends TestCase
+class GPTRequestHandlerTest extends TestCase
 {
-    public function testSendRequest()
-    {
-
-    }
+    
 }

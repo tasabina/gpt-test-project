@@ -5,7 +5,7 @@ namespace GptTestProject\Tests\Commands;
 use GptTestProject\Commands\ChatCLI;
 use PHPUnit\Framework\TestCase;
 use Symfony\Component\Console\Application;
-use Symfony\Component\Console\Tester\CommandCompletionTester;
+use Symfony\Component\Console\Tester\CommandTester;
 
 class ChatCLICommandTest extends TestCase
 {
@@ -14,12 +14,15 @@ class ChatCLICommandTest extends TestCase
         $application = new Application();
         $application->add(new ChatCLI());
 
-        $tester = new CommandCompletionTester($application->get('chat'));
+        $tester = new CommandTester($application->get('chat'));
+        $tester->setInputs([
+            'Return to me something',
+            'yes',
+            'Return to me something new',
+            'no'
+        ]);
+        $tester->execute([]);
 
-        $suggestions = $tester->complete(['']);
-        // $this->assertSame(['Fabien', 'Fabrice', 'Wouter'], $suggestions);
-
-        $suggestions = $tester->complete(['Fa']);
-        // $this->assertSame(['Fabien', 'Fabrice'], $suggestions);
+        $tester->assertCommandIsSuccessful();
     }
 }

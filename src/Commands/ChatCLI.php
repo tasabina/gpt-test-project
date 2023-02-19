@@ -3,6 +3,7 @@
 namespace GptTestProject\Commands;
 
 use GptTestProject\GPTApplication\GPTRequestHandler;
+use GptTestProject\Utilities\ResponseFormatter;
 use Symfony\Component\Console\Attribute\AsCommand;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputInterface;
@@ -14,8 +15,9 @@ use Symfony\Component\Console\Style\SymfonyStyle;
     name: 'chat',
     description: 'Chat with GPT-3.'
 )]
-class ChatCLI extends BaseCLI
+class ChatCLI extends Command
 {
+    use ResponseFormatter;
     /**
      * The command help shown when running
      * the command with the "--help" option
@@ -30,10 +32,10 @@ class ChatCLI extends BaseCLI
      */
     protected function execute(InputInterface $input, OutputInterface $output): int
     {
-        /** Just in case */
-        if (!$output instanceof ConsoleOutputInterface) {
-            throw new \LogicException('This command accepts only an instance of "ConsoleOutputInterface".');
-        }
+        // /** Just in case */
+        // if (!$output instanceof ConsoleOutputInterface) {
+        //     throw new \LogicException('This command accepts only an instance of "ConsoleOutputInterface".');
+        // }
         /** Add styled output to response  */
         $inOut = new SymfonyStyle($input, $output);
         

@@ -2,6 +2,7 @@
 
 namespace GptTestProject\GPTApplication;
 
+use stdClass;
 use Symfony\Component\Dotenv\Dotenv;
 
 final class GPTRequestHandler
@@ -63,5 +64,16 @@ final class GPTRequestHandler
                 "stop" => ["\\n"],
             ]
         );     
+    }
+
+    public function getMockData()
+    {
+        $response = new stdClass();
+        $response->text = 'Simple response.';
+
+        $obj = new stdClass();
+        $obj->choices[] = $response;
+
+        return $obj;
     }
 } 

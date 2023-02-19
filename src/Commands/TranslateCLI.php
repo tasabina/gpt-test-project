@@ -3,6 +3,7 @@
 namespace GptTestProject\Commands;
 
 use GptTestProject\GPTApplication\GPTRequestHandler;
+use GptTestProject\Utilities\ResponseFormatter;
 use Symfony\Component\Console\Attribute\AsCommand;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputInterface;
@@ -15,8 +16,9 @@ use Symfony\Component\Console\Style\SymfonyStyle;
     name: 'translate',
     description: 'Translate words.'
 )]
-class TranslateCLI extends BaseCLI
+class TranslateCLI extends Command
 {
+    use ResponseFormatter;
     /**
      * The command configuration method.
      * The command help shown when running the command with the "--help" option.
@@ -43,9 +45,9 @@ class TranslateCLI extends BaseCLI
     protected function execute(InputInterface $input, OutputInterface $output): int
     {
         /** Just in case */
-        if (!$output instanceof ConsoleOutputInterface) {
-            throw new \LogicException('This command accepts only an instance of "ConsoleOutputInterface".');
-        }
+        // if (!$output instanceof ConsoleOutputInterface) {
+        //     throw new \LogicException('This command accepts only an instance of "ConsoleOutputInterface".');
+        // }
         /** Add styled output to response  */
         $inOut = new SymfonyStyle($input, $output);
         /** Define language */
