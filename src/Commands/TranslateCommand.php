@@ -17,7 +17,7 @@ use Symfony\Component\Console\Style\SymfonyStyle;
 )]
 class TranslateCommand extends BaseCommand
 {
-    protected string $question = 'Please input your phrase for translation:';
+    protected string $question = 'Please input your phrase for translation';
     
     protected string $error_message = 'You did not provide any words for translation';
 

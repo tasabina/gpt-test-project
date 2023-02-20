@@ -29,9 +29,13 @@ jobs:
 
       - name: Install composer dependencies
         uses: ramsey/composer-install@v2
+      
+      - name: Create environment
+        run: |
+          touch .env
+          echo GPT_SECRET_KEY="test_key" >> .env
+          echo DEV_ENV=1 >> .env
+          cat .env
 
-      - name: Run PHPUnit
-        env:
-          GPT_SECRET_KEY: test_key
-          DEV_CI: true 
+      - name: Run PHPUnit 
         run: vendor/bin/phpunit tests

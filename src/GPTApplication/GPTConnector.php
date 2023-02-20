@@ -32,7 +32,7 @@ final class GPTConnector
             throw new Exception('NULL is unexpected. API secret key should be valid string value.');
         }
 
-        if ($this->getEnvironmentVariable('DEV_ENV') === "true") {
+        if ((bool) $this->getEnvironmentVariable('DEV_ENV')) {
             return $this->getMockData();
         }
 
