@@ -31,4 +31,7 @@ jobs:
         uses: ramsey/composer-install@v2
 
       - name: Run PHPUnit
+        env:
+          GPT_SECRET_KEY: test_key
+          DEV_CI: true 
         run: vendor/bin/phpunit tests

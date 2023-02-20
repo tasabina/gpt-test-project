@@ -2,11 +2,14 @@
 
 namespace GptTestProject\GPTApplication;
 
+use Exception;
+use GptTestProject\Providers\EnvironmentProvider;
 use stdClass;
-use Symfony\Component\Dotenv\Dotenv;
 
-final class GPTRequestHandler
+final class GPTConnector
 {
+    use EnvironmentProvider;
+
     public const GPT_API_URL = 'https://api.openai.com/v1/completions';
     public const CONTENT_TYPE_JSON = 'application/json';
 
@@ -17,15 +20,22 @@ final class GPTRequestHandler
 
     public function __construct()
     {
-        $dotenv = new Dotenv();
-        $dotenv->load(__DIR__.'/../../.env');
-
-        $this->api_secret_key = $_ENV['GPT_SECRET_KEY'];
+        $this->api_secret_key = $this->getEnvironmentVariable('GPT_SECRET_KEY');
     }
 
+    /**
+     * @throws Exception if $api_secret_key wasn't set.
+     */
     public function sendRequest(string $request): string
     {
-        // $response = $this->prepareString($request);
+        if (is_null($this->api_secret_key)) {
+            throw new Exception('NULL is unexpected. API secret key should be valid string value.');
+        }
+
+        if ($this->getEnvironmentVariable('DEV_ENV') === "true") {
+            return $this->getMockData();
+        }
+
         $curl_request = curl_init();
         $curl_options = [
             CURLOPT_URL => self::GPT_API_URL,
@@ -69,11 +79,11 @@ final class GPTRequestHandler
     public function getMockData()
     {
         $response = new stdClass();
-        $response->text = 'Simple response.';
+        $response->text = 'Mock data response';
 
         $obj = new stdClass();
         $obj->choices[] = $response;
 
-        return $obj;
+        return json_encode($obj);
     }
 } 

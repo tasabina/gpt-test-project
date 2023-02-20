@@ -2,17 +2,17 @@
 
 namespace GptTestProject\Tests\Commands;
 
-use GptTestProject\Commands\ChatCLI;
+use GptTestProject\Commands\ChatCommand;
 use PHPUnit\Framework\TestCase;
 use Symfony\Component\Console\Application;
 use Symfony\Component\Console\Tester\CommandTester;
 
-class ChatCLICommandTest extends TestCase
+class ChatCommandTest extends TestCase
 {
     public function testExecute()
     {
         $application = new Application();
-        $application->add(new ChatCLI());
+        $application->add(new ChatCommand());
 
         $tester = new CommandTester($application->get('chat'));
         $tester->setInputs([

@@ -2,13 +2,12 @@
 
 namespace GptTestProject\Commands;
 
-use GptTestProject\GPTApplication\GPTRequestHandler;
+use GptTestProject\GPTApplication\GPTConnector;
 use GptTestProject\Utilities\ResponseFormatter;
 use Symfony\Component\Console\Attribute\AsCommand;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Input\InputOption;
-use Symfony\Component\Console\Output\ConsoleOutputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\Console\Style\SymfonyStyle;
 
@@ -16,9 +15,13 @@ use Symfony\Component\Console\Style\SymfonyStyle;
     name: 'translate',
     description: 'Translate words.'
 )]
-class TranslateCLI extends Command
+class TranslateCommand extends BaseCommand
 {
-    use ResponseFormatter;
+    protected string $question = 'Please input your phrase for translation:';
+    
+    protected string $error_message = 'You did not provide any words for translation';
+
+    protected string $confirm_message = 'Would you like to translate something again?';
     /**
      * The command configuration method.
      * The command help shown when running the command with the "--help" option.
@@ -38,19 +41,12 @@ class TranslateCLI extends Command
                 'en',
             );
     }
-
+    
     /**
-     * The command execution metod
+     * Method defines language
      */
-    protected function execute(InputInterface $input, OutputInterface $output): int
+    public function onBeforeRequest(InputInterface &$input, string &$phrase): void
     {
-        /** Just in case */
-        // if (!$output instanceof ConsoleOutputInterface) {
-        //     throw new \LogicException('This command accepts only an instance of "ConsoleOutputInterface".');
-        // }
-        /** Add styled output to response  */
-        $inOut = new SymfonyStyle($input, $output);
-        /** Define language */
         $language = $input->getOption('language') ?? 'en';
         preg_match('/(en|fr|ru)/', $language, $matches, PREG_UNMATCHED_AS_NULL);
         $language = $matches[0] ?? 'en';
@@ -68,23 +64,7 @@ class TranslateCLI extends Command
                 break;
         }
 
-        $phrase = $inOut->ask('Please input your phrase for translation:');
-
-        if(trim($phrase) === '') {
-            $inOut->error('You did not provide any words for translation.');
-        } else {
-            $text .= $phrase;
-            $gptHandler = new GPTRequestHandler();
-            $response = $gptHandler->sendRequest($text);
-
-            $inOut->success(sprintf('Your result is: %s', $this->responseFormat($response)));
-        }
-
-        if ($inOut->confirm('Would you like to translate something again?')) {
-            return $this->execute($input, $output);
-        }
-
-        return Command::SUCCESS;
+        $phrase = $text . $phrase; 
     }
 
 }
