@@ -17,7 +17,7 @@ class BaseCommand extends Command
 
     protected string $error_message = 'You did not provide any words for your message';
 
-    protected string $confirm_question = 'You did not provide any words for your message';
+    protected string $confirm_question = 'Would you like to ask something else?';
     /**
      * The command execution metod
      */
