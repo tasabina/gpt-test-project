@@ -12,12 +12,14 @@ trait EnvironmentProvider
     private static function getEnvironmentVariable(string $varName): ?string
     {
         if (!$varName) return null;
+
+        if (php_sapi_name() == "cli") {
+            $root = $_SERVER["PWD"];
+
+            $dotenv = new Dotenv();
+            $dotenv->load($root.'/.env');
+        }
         
-        $root = $_SERVER["PWD"];
-
-        $dotenv = new Dotenv();
-        $dotenv->load($root.'/.env');
-
         return $_ENV[$varName];
     }
 }
